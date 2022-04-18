@@ -33,7 +33,11 @@ const openingPrompt = [
 
 function init() {
   inquirer.prompt(openingPrompt).then((answers) => {
-      switch (choices) {
+    
+    const choices = openingPrompt.choices;
+
+    switch (choices) {
+
     case "View All Employees":
       showAllEmployees();
       break;
