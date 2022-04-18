@@ -2,13 +2,14 @@ const inquirer = require("inquirer");
 const express = require("express");
 const cTable = require("console.table");
 const mysql = require("mysql2");
+const functions = require("./db/index")
 
 const db = mysql.createConnection(
   {
     host: "localhost",
     user: "root",
     password: "password1!",
-    database: "employee_db",
+    database: "company_db",
   },
   console.log(`Connected to employee database.`)
 );
@@ -77,7 +78,7 @@ function init() {
 
 init();
 
-
+module.exports = db;
 
 //     // this will control what happens depending on what choice is selected, 
 //     .then(answers) => {
