@@ -1,8 +1,8 @@
 const inquirer = require("inquirer");
-const express = require("express");
+
 const cTable = require("console.table");
 const mysql = require("mysql2");
-const functions = require("./db/index")
+// const showAllEmployees = require("./db/index");
 
 const db = mysql.createConnection(
   {
@@ -11,77 +11,87 @@ const db = mysql.createConnection(
     password: "password1!",
     database: "company_db",
   },
-  console.log(`Connected to employee database.`)
+  console.log(`Connected to company database.`)
 );
 
-//opening prompt 
+db.connect(function (err) {
+  if (err) throw err;
+  init();
+});
+
+//opening prompt
 const openingPrompt = [
-  
-    {
-      type: "list",
-      name: "firstPrompt",
-      message: "What would you like to do?",
-      choices: [
-        "View All Employees",
-        "Add Employee",
-        "Update Employee Role",
-        "View All Role",
-        "View All Departments",
-        "Add Department",
-        "Quit",],
-    }
-  ];
+  {
+    type: "list",
+    name: "firstPrompt",
+    message: "What would you like to do?",
+    choices: [
+      "View All Employees",
+      "Add Employee",
+      "Update Employee Role",
+      "View All Role",
+      "View All Departments",
+      "Add Department",
+      "Quit",
+    ],
+  },
+];
+
+function showAllEmployees() {
+  console.log("hello");
+  let sql = "SELECT * FROM employee;";
+  db.query(sql, function (err, res) {
+    if (err) throw err;
+    console.log("Employees Found");
+    console.table(res);
+    init();
+  });
+}
 
 function init() {
-  inquirer.prompt(openingPrompt).then((answers) => {
-    
-    const choices = openingPrompt.choices;
+  inquirer.prompt(openingPrompt).then((a) => {
+    switch (a.firstPrompt) {
+      case "View All Employees":
+        showAllEmployees();
+        break;
 
-    switch (choices) {
+      case "Add Employee":
+        addEmployee();
+        break;
 
-    case "View All Employees":
-      showAllEmployees();
-      break;
+      case "Update Employee Role":
+        updateEmployeeRole();
+        break;
 
-    case "Add Employee":
-      addEmployee();
-      break;
+      case "View All Role":
+        viewAllRoles();
+        break;
 
-    case "Update Employee Role":
-      updateEmployeeRole();
-      break;
+      case "View All Departments":
+        ViewAllDepartments();
+        break;
 
-    case "View All Role":
-      viewAllRoles();
-      break;
+      case "Add Department":
+        addDepartment();
+        break;
 
-    case "View All Departments":
-      ViewAllDepartments();
-      break;
+      case "Quit":
+        console.log("hi");
+        quit();
+        break;
 
-    case "Add Department":
-      addDepartment();
-      break;
+      // default:
+      //   console.log("hi");
+      //   break;
+    }
+  });
+}
 
-    case "Quit":
-      quit();
-      break;
+// init();
 
-    default:
-      break;
+// module.exports = db;
 
-
-
-  }
-  })
-};
-
-
-init();
-
-module.exports = db;
-
-//     // this will control what happens depending on what choice is selected, 
+//     // this will control what happens depending on what choice is selected,
 //     .then(answers) => {
 //   const { choices } = answers;
 
@@ -117,13 +127,8 @@ module.exports = db;
 //     default:
 //       break;
 
-
-
 //   }
 // }
-
-
-
 
 // GIVEN a command-line application that accepts user input
 // WHEN I start the application
