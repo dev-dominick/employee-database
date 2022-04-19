@@ -76,6 +76,7 @@ function init() {
   })
 };
 
+
 init();
 
 module.exports = db;
