@@ -2,6 +2,7 @@ const inquirer = require("inquirer");
 
 const cTable = require("console.table");
 const mysql = require("mysql2");
+// const Connection = require("mysql2/typings/mysql/lib/Connection");
 // const showAllEmployees = require("./db/index");
 
 const db = mysql.createConnection(
@@ -19,6 +20,9 @@ db.connect(function (err) {
   init();
 });
 
+// WHEN I start the application
+// THEN I am presented with the following options: view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
+
 //opening prompt
 const openingPrompt = [
   {
@@ -27,11 +31,12 @@ const openingPrompt = [
     message: "What would you like to do?",
     choices: [
       "View All Employees",
-      "Add Employee",
+      "Add an Employee",
       "Update Employee Role",
-      "View All Role",
+      "View All Roles",
+      "Add a Role",
       "View All Departments",
-      "Add Department",
+      "Add a Department",
       "Quit",
     ],
   },
@@ -48,6 +53,68 @@ function showAllEmployees() {
   });
 }
 
+function addEmployee() {
+  db.query("SELECT * FROM role", function (err,res) {
+    if (err) throw err;
+    inquirer.prompt([
+      {
+        name: "first_name",
+        type: "input",
+        message: "What is the employee's fist name? ",
+      },
+      {
+        name: "last_name",
+        type: "input",
+        message: "What is the employee's last name? ",
+      },
+      {
+        name: "manager_id",
+        type: "input",
+        message: "What is the employee's manager's ID? ",
+      },
+    ]);
+    
+  })
+};
+
+function updateEmployeeRole() {
+
+};
+
+function viewAllRoles() {
+  console.log("hello");
+  let sql = "SELECT * FROM role;";
+  db.query(sql, function (err, res) {
+    if (err) throw err;
+    console.log("Roles Found");
+    console.table(res);
+    init();
+  });
+};
+
+function addRole() {
+
+};
+
+function ViewAllDepartments() {
+  console.log("hello");
+  let sql = "SELECT * FROM department;";
+  db.query(sql, function (err, res) {
+    if (err) throw err;
+    console.log("Departments Found");
+    console.table(res);
+    init();
+  });
+};
+
+function addDepartment() {
+
+};
+
+function quit() {
+  Connection.end();
+};
+
 function init() {
   inquirer.prompt(openingPrompt).then((a) => {
     switch (a.firstPrompt) {
@@ -55,7 +122,7 @@ function init() {
         showAllEmployees();
         break;
 
-      case "Add Employee":
+      case "Add an Employee":
         addEmployee();
         break;
 
@@ -63,8 +130,12 @@ function init() {
         updateEmployeeRole();
         break;
 
-      case "View All Role":
+      case "View All Roles":
         viewAllRoles();
+        break;
+
+      case "Add a Role":
+        addRole();
         break;
 
       case "View All Departments":
@@ -80,55 +151,13 @@ function init() {
         quit();
         break;
 
-      // default:
-      //   console.log("hi");
-      //   break;
+      default:
+        break;
     }
   });
 }
 
-// init();
 
-// module.exports = db;
-
-//     // this will control what happens depending on what choice is selected,
-//     .then(answers) => {
-//   const { choices } = answers;
-
-//   switch (choices) {
-//     case "View All Employees":
-//       showAllEmployees();
-//       break;
-
-//     case "Add Employee":
-//       addEmployee();
-//       break;
-
-//     case "Update Employee Role":
-//       updateEmployeeRole();
-//       break;
-
-//     case "View All Role":
-//       viewAllRoles();
-//       break;
-
-//     case "View All Departments":
-//       ViewAllDepartments();
-//       break;
-
-//     case "Add Department":
-//       addDepartment();
-//       break;
-
-//     case "Quit":
-//       quit();
-//       break;
-
-//     default:
-//       break;
-
-//   }
-// }
 
 // GIVEN a command-line application that accepts user input
 // WHEN I start the application
