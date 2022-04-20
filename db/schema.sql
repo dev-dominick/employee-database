@@ -18,7 +18,7 @@ CREATE TABLE role (
   salary INT NOT NULL,
 
   department_id INT NOT NULL
-30
+
   /* FOREIGN KEY (department_id) REFERENCES department(id) */
   
 );

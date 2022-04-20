@@ -44,7 +44,8 @@ const openingPrompt = [
 
 function showAllEmployees() {
   console.log("hello");
-  let sql = "SELECT * FROM employee;";
+  let sql =
+    "SELECT * FROM employee INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id;";
   db.query(sql, function (err, res) {
     if (err) throw err;
     console.log("Employees Found");
@@ -83,6 +84,7 @@ function showAllEmployees() {
           [answer.first_name, answer.last_name, answer.role_id, answer.manager_id],
           function (err) {
             if (err) throw err;
+            console.log("employee added");
             console.table(answer);
             init();
           }
