@@ -11,14 +11,14 @@ CREATE TABLE department (
 );
 
 CREATE TABLE role (
-  id INT PRIMARY KEY AUTO_INCREMENT,
+  id INT AUTO_INCREMENT PRIMARY KEY,
 
   title VARCHAR(30) NOT NULL,
 
   salary INT NOT NULL,
 
   department_id INT NOT NULL
-
+30
   /* FOREIGN KEY (department_id) REFERENCES department(id) */
   
 );

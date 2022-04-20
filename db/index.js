@@ -2,7 +2,7 @@
 // const db = require("../server")
 // const cTable = require("console.table");
 
-
+// 
 // function showAllEmployees(db) {
 //   console.log("hello");
 //   let sql = "SELECT * FROM employee;";
@@ -10,7 +10,7 @@
 //     if (err) throw err
 //     console.log("employeesfound")
 //     console.table(sql)
-//     init()
+
 //   })
 
 // };
