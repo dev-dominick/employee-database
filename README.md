@@ -19,7 +19,7 @@ Clone project from repo (https://github.com/dev-dominick/employee-database). To 
 
 ## Usage
 
-
+https://watch.screencastify.com/v/xLD74GhOBT3TVd6U6Mxe
 
 ## Credits
 
